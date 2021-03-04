@@ -27,7 +27,8 @@ sudo dd if=/dev/zero of=/media/nixdrive/nixcache bs=1G count=100 # cache size ma
 mkfs -t ext4 /media/nixdrive/nixcache
 sudo mkdir /nix
 sudo mount /media/nixdrive/nixcache /nix
-sudo chown -R pi /nix # replace pi with your username
+export uid=$(id -u)
+sudo chown -R $uid /nix # replace pi with your username
 ```
 
 Alternatively, you can try using the `--bind` option with `mount` to map a directory to the `/nix` cache:
