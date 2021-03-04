@@ -54,6 +54,8 @@ git pull
 nix build -f . arm7.diskImage -o diskImage
 ```
 
+Personal note from the author of this fork: I hate caches and 100GB updates, just so you know.
+
 ## Technical Details
 The firmware is split into two parts, one running on the VC4 and the other on ARM. The VC4 part initializes PLLC and moves VPU over to it, and then brings up UART. It performs SDRAM initialization, mapping it to  `0xC0000000` (uncached alias). Next, ARM is initialized, and the embedded bootloader is mapped to ARM address `0x0`. `arm_chainloader` is then executed.
 
