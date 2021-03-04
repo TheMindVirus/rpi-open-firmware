@@ -32,7 +32,7 @@ sudo chown -R pi /nix # replace pi with your username
 
 Alternatively, you can try using the `--bind` option with `mount` to map a directory to the `/nix` cache:
 ```
-sudo mount /dev/sdb1 /media/nixdrive -o umask=0000,gid=100,uid=65534 # replace sdb1 as before
+sudo mount /dev/sdb1 /media/nixdrive -o umask=0000,gid=1000,uid=1000 # replace sdb1 as before
 sudo mkdir /media/nixdrive/nixcache
 sudo mount --bind /media/nixdrive/nixcache /nix
 ...
