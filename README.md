@@ -16,6 +16,37 @@ As a prerequisite, Julian Brown's [VC4 toolchain](https://github.com/itszor/vc4-
 
 macOS compilation is similar to GNU/Linux, save platform errata described here. Instructions to build the ARM toolchain are [here](https://launchpadlibrarian.net/287100910/How-to-build-toolchain.pdf). Due to symlinking by default, GCC must be installed manually, and, an older version of guile is necessary (homebrew packages `gcc-6` and `guile18`, respectively). Finally, set the environment variable `LIBRARY_PATH` to `/lib:/lib64` when running `buildall.sh. 
 
+### Building with Nix Package Manager on Debian
+
+The nix build process is storage-intensive. You will need at least 100GB of space on your root partition,
+or you will need to follow these steps to create a nixcache file on another hard disk with enough space:
+```
+sudo mkdir /media/nixdrive
+sudo mount /dev/sdb1 /media/nixdrive # replace sdb1 with your drive
+sudo dd if=/dev/zero of=/media/nixdrive/nixcache bs=1G count=20 # vary the size of this file depending on your caching needs
+mkfs -t ext4 /media/nixdrive/nixcache
+sudo mkdir /nix
+sudo mount /media/nixdrive/nixcache /nix
+sudo chown -R pi /nix
+```
+
+To build with nix, enter the following commands:
+```
+curl -L https://nixos.org/nix/install -o getnix.sh
+./getnix.sh
+. ~/.nix-profile/etc/profile.d/nix.sh
+git clone https://github.com/librerpi/rpi-open-firmware
+cd rpi-open-firmware
+nix build -f . arm7.diskImage -o diskImage
+```
+
+To update an already built and cached environment:
+```
+cd rpi-open-firmware
+git pull
+nix build -f . arm7.diskImage -o diskImage
+```
+
 ## Technical Details
 The firmware is split into two parts, one running on the VC4 and the other on ARM. The VC4 part initializes PLLC and moves VPU over to it, and then brings up UART. It performs SDRAM initialization, mapping it to  `0xC0000000` (uncached alias). Next, ARM is initialized, and the embedded bootloader is mapped to ARM address `0x0`. `arm_chainloader` is then executed.
 
