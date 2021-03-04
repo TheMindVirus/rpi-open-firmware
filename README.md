@@ -60,6 +60,17 @@ git pull
 nix build -f . arm7.diskImage -o diskImage
 ```
 
+To clean the caches and start from scratch,
+the following folders need to be deleted:
+```
+/nix
+/media/nixdrive/nixcache # will be deleted if bound to /nix
+/home/<user>/.nix-channels
+/home/<user>/.nix-defexpr
+/home/<user>/.nix-profile
+/tmp
+```
+
 Personal note from the author of this fork: I hate caches and 100GB updates, just so you know.
 
 ## Technical Details
