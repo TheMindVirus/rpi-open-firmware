@@ -23,7 +23,7 @@ or you will need to follow these steps to create a nixcache file on another hard
 ```
 sudo mkdir /media/nixdrive
 sudo mount /dev/sdb1 /media/nixdrive # replace sdb1 with your drive
-sudo dd if=/dev/zero of=/media/nixdrive/nixcache bs=1G count=20 # vary the size of this file depending on your caching needs
+sudo dd if=/dev/zero of=/media/nixdrive/nixcache bs=1G count=100 # cache size may vary
 mkfs -t ext4 /media/nixdrive/nixcache
 sudo mkdir /nix
 sudo mount /media/nixdrive/nixcache /nix
