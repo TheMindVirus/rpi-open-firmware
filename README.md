@@ -30,10 +30,13 @@ sudo mount /media/nixdrive/nixcache /nix
 sudo chown -R pi /nix
 ```
 
-Alternatively, you can try using the `--bind` option with nix to map the nixcache to a directory:
+Alternatively, you can try using the `--bind` option with `mount` to map a directory to the `/nix` cache:
 ```
 sudo mount /dev/sdb1 /media/nixdrive # replace sdb1 with your drive
-nix build -f . arm7.diskImage -o diskImage --bind /media/nixdrive/nix/
+sudo mkdir /media/nixdrive/nixcache
+sudo mount --bind /media/nixdrive/nixcache /nix
+...
+nix build -f . arm7.diskImage -o diskImage
 ```
 
 To build with nix, enter the following commands:
