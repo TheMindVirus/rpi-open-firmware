@@ -42,6 +42,7 @@ nix build -f . arm7.diskImage -o diskImage
 
 To update an already built and cached environment:
 ```
+. ~/.nix-profile/etc/profile.d/nix.sh
 cd rpi-open-firmware
 git pull
 nix build -f . arm7.diskImage -o diskImage
